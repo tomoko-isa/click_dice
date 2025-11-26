@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+<body>
+    <!-- ボタンを記述 --- (*1) -->
+    <button mpy-click="show_alert">格言を表示</button>
+</body>
+<script type="mpy">
+    import js
+    # クリックされたときに呼び出される関数 --- (*2)
+    def show_alert(event):
+        js.alert("手っ取り早く得た財産は減り少しずつ貯める財産は増える")
+</script>

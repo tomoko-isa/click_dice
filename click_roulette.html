@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+<!-- HTMLの本体 --- (*1) -->
+<body>
+    <div><button mpy-click="start">ルーレットを回す</button><div>
+    <div id="image_area">
+        <img id="roulette" src="roulette.png">
+    </div>
+    <div id="disp"></div>
+</body>
+<!-- CSSの定義 --- (*2) -->
+<style>
+body { text-align:center; }
+#disp { font-size:8em; color:white; }
+#image_area { padding-top: 100px; }
+#roulette {
+    width:500px;
+    height:500px;
+}
+/* 回転アニメーションを定義 --- (*3) */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+</style>
+<script type="mpy">
+    import random
+    from pyscript import document
+    from js import setTimeout
+
+    # ボタンをクリックされたときに呼び出される関数 --- (*4)
+    def start(event):
+        # dispの内容をクリア(前回の結果を消す) --- (*5)
+        disp = document.getElementById("disp")
+        disp.innerHTML = ""
+        # ルーレットのアニメーションを開始 --- (*6)
+        roulette = document.getElementById("roulette")
+        roulette.style.animation = "spin 2s linear infinite"
+        # 2秒後にstop関数を呼び出す --- (*7)
+        setTimeout(stop, 2000)
+
+    # ルーレットを止める関数 --- (*8)
+    def stop():
+        # 0から36の乱数を得る --- (*9)
+        r = random.randint(0, 36)
+        # ルーレットの色を判定する --- (*10)
+        if r == 0:
+            color = "green"
+        elif r % 2 == 0:
+            color = "black"
+        else:
+            color = "red"
+        # id属性がdispのものを取得 --- (*11)
+        disp = document.getElementById("disp")
+        # dispのテキストを更新 --- (*12)
+        disp.innerHTML = f"<div style='background-color:{color}'>{r}</div>"
+        # アニメーションを止める --- (*13)
+        roulette = document.getElementById("roulette")
+        roulette.style.animation = "none"
+</script>
