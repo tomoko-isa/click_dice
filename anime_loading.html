@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<body style="text-align: center;">
+  <div class="hourglass">⏳</div>
+  <div>読み込み中です ... 少々お待ちください</div>
+</body>
+<style>
+/* アニメーション効果を定義 */
+@keyframes hg_spin {
+  to { transform: rotate(360deg); }
+}
+/* 砂時計を回転させる */
+.hourglass {
+  font-size: 5rem;                       /* 絵文字サイズ */
+  display: inline-block;                 /* transform効果を利かせるため */
+  animation: hg_spin 4s linear infinite; /* 4秒で1回転、繰り返し */
+}
+</style>

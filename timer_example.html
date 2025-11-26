@@ -1,0 +1,20 @@
+<!DOCTYPE html><meta charset="UTF-8">
+<!-- HTMLで時計を定義 --- (*1) -->
+<body style="font-size: 8em;">
+    <div id="clock_div">00:00:00</div>
+</body>
+<!-- PyScriptのスクリプト --- (*2) -->
+<script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+<script type="mpy">
+    from js import setTimeout, document, Date
+
+    # 現在時刻を更新する関数を定義 --- (*3)
+    def update_clock():
+        # 現在時刻を更新 --- (*4)
+        time_s = Date.new().toLocaleTimeString("ja-JP")
+        document.getElementById("clock_div").innerText = time_s
+        # 500ミリ秒後に時刻更新を行うように指定 --- (*5)
+        setTimeout(update_clock, 500)
+
+    update_clock()  # 最初の呼び出し --- (*6)
+</script>

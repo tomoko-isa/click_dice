@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+<!-- HTMLの本体 --- (*1) -->
+<body>
+    <div style="padding:2em;">
+        <input id="user" type="number"  min="1" max="6" value="1" >
+        <button mpy-click="start">数当て</button><br>
+        <div id="result"></div>
+    </div>
+</body>
+<script type="mpy">
+    import random
+    from pyscript import document
+
+    # クリックされたときに呼び出される関数 --- (*2)
+    def start(event):
+        # 1から6の乱数を得る --- (*3)
+        ans = random.randint(1, 6)
+        # ユーザーが入力した数字を得る --- (*4)
+        user = document.getElementById("user").value
+        # 結果判定 --- (*5)
+        if user == str(ans):
+            msg = f"あたり！答えは{ans}でした。"
+            color = "red"
+        else:
+            msg = f"はずれ！答えは{ans}でした。"
+            color = "blue"
+        # 結果を表示 --- (*6)
+        result = document.getElementById("result")
+        result.textContent = msg # テキストを更新
+        result.style.color = color # 文字色を更新
+</script>

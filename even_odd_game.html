@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+<!-- CSSの指定 --- (*1) -->
+<style>
+    button:focus { border: 2px solid blue; }
+    .ok { background-color: red; }
+    .ng { background-color: blue; }
+    .result { color: white; border-radius: 8px; padding: 0.5em; }
+</style>
+<!-- HTMLの本体 --- (*2) -->
+<body>
+    <div style="padding: 2em;">
+        <div>◆ サイコロの目が偶数か奇数かを当ててください。</div>
+        <button mpy-click="check_even">偶数</button>
+        <button mpy-click="check_odd">奇数</button>
+        <div id="disp"></div>
+    </div>
+</body>
+<script type="mpy">
+    import random
+    from pyscript import document
+
+    # 偶数ボタンを押した時に呼び出される関数 --- (*3)
+    def check_even(event):
+        check(0, "偶数")  # 共通関数checkを呼び出す
+
+    # 奇数ボタンを押した時に呼び出される関数 --- (*4)
+    def check_odd(event):
+        check(1, "奇数")  # 共通関数checkを呼び出す
+
+    # 数当ての判定を行う関数 --- (*5)
+    def check(user, label):
+        # サイコロの目を決める --- (*6)
+        dice = random.randint(1, 6)
+        # 押されたボタンに応じて判定する --- (*7)
+        dice_mod = dice % 2  # 0なら偶数、1なら奇数になる
+        if user == dice_mod:
+            msg = f"正解です(^o^)"
+            class_name = "ok"
+        else:
+            msg = f"残念でした(TへT)"
+            class_name = "ng"
+        # 結果を表示 --- (*8)
+        disp = document.getElementById("disp")
+        disp.innerHTML = (
+            f"<p class='result {class_name}'>"
+            f"  <u>{label}</u>を選択しました<br>"
+            f"  サイコロの目は{dice}でした。<br>"
+            f"  <b>{msg}</b></p>"
+        )
+</script>

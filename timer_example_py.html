@@ -1,0 +1,20 @@
+<!DOCTYPE html><meta charset="UTF-8">
+<body style="font-size: 8em;">
+    <div id="clock_div">00:00:00</div>
+</body>
+<script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+<script type="py">
+    # 実行エンジンをPyodideに変更
+    from js import setTimeout, document, Date
+    from pyodide.ffi import create_proxy  # --- (*1)
+
+    # 現在時刻を更新する関数を定義
+    def update_clock():
+        # 現在時刻を更新
+        time_s = Date.new().toLocaleTimeString("ja-JP")
+        document.getElementById("clock_div").innerText = time_s
+        # 500ミリ秒後に時刻更新を行うように指定 --- (*2)
+        setTimeout(create_proxy(update_clock), 500)
+
+    update_clock()
+</script>

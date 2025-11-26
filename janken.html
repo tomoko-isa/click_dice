@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head><!-- HTMLのヘッダ -- (*1) -->
+    <meta charset="UTF-8">
+    <title>ジャンケンで勝負</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h3 { color: white; background-color: blue; }
+        body { text-align: center; font-size: 2.5em; }
+        button { font-size: 1.0em; width: 7em; margin: 0.1em; }
+    </style>
+</head>
+<body><!-- HTMLの本体 -- (*2) -->
+    <h3>ジャンケンで勝負</h3>
+    <div>
+        <div id="disp"></div><hr>
+        <div><!-- ジャンケンの手のボタン --- (*3) -->
+            <button mpy-click="check_goo">✊グー</button>
+            <button mpy-click="check_choki">✌チョキ</button>
+            <button mpy-click="check_paa">🖐パー</button>
+        </div>
+    </div>
+</body>
+<!-- PyScriptの取り込みとプログラム -->
+<script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+<script type="mpy">
+    import random
+    from pyscript import document
+
+    # ジャンケンの手を表す定数を定義 --- (*4)
+    GOO = 0  # グーを表現する定数
+    CHOKI = 1  # チョキを表現する定数
+    PAA = 2  # パーを表現する定数
+    # 手から文字列への変換リスト --- (*5)
+    HANDS = ["✊グー", "✌チョキ", "🖐パー"]
+    # 勝敗判定リスト --- (*6)
+    RESULTS = ["あいこ", "😊勝ち", "😭負け"]
+
+    # ユーザーがジャンケンの手のボタンを押した時 --- (*7)
+    def check_goo(event):
+        check(GOO)  # 共通関数checkを呼び出す
+    def check_choki(event):
+        check(CHOKI)  # 共通関数checkを呼び出す
+    def check_paa(event):
+        check(PAA)  # 共通関数checkを呼び出す
+
+    # ジャンケンの判定を行う関数 --- (*8)
+    def check(user):
+        # 相手の手を決める --- (*9)
+        com = random.randint(0, 2)
+        # 勝負判定する --- (*10)
+        result = janken(user, com)
+        # 結果を表示 --- (*11)
+        disp = document.getElementById("disp")
+        disp.innerHTML = (
+            f"相手: {HANDS[com]}<br>"
+            f"自分: {HANDS[user]}<br><hr>"
+            f"判定: {RESULTS[result]}"
+        )
+
+    # ジャンケンの勝敗を判定する関数 --- (*12)
+    def janken(user, com):
+        # あいこの場合
+        if user == com:
+            return 0
+        # ユーザの勝ちパターン
+        if (user == GOO) and (com == CHOKI):
+            return 1
+        if (user == CHOKI) and (com == PAA):
+            return 1
+        if (user == PAA) and (com == GOO):
+            return 1
+        # それ以外は負け
+        return 2
+</script>
+</html>
